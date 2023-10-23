@@ -185,9 +185,6 @@ public class Main {
     }
     return count >= 2;
   }
-
-  public static int test() {
-    return 0;
-  }
+  
 
 }
