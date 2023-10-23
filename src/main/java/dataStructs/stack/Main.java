@@ -7,8 +7,9 @@ import utils.StackUtils;
 @SuppressWarnings("unused")
 public class Main {
   public static void stackMain() {
-    Stack<Integer> stack = StackUtils.build(new Integer[]{4, 4, 4, 8});
-    System.out.println(hasNumTwice(stack, 4));
+    Stack<Integer> stack = StackUtils.build(new Integer[]{7, 6, 14, 8, 12, 9, 7});
+    Stack<Integer> stack2 = StackUtils.build(new Integer[]{11, 9, 1, 4, 13, 4, 8, 2});
+    System.out.println(sumOfCoupleBiggerThenAll(stack, stack2));
   }
 
   public static boolean isEven(Stack<Integer> stack) {
@@ -185,6 +186,53 @@ public class Main {
     }
     return count >= 2;
   }
-  
+
+  public static Stack<Integer> createStackFromBlock(Stack<Integer> stack) {
+    if (stack.isEmpty()) return new Stack<>();
+
+    Stack<Integer> temp = StackUtils.copy(stack);
+    Stack<Integer> result = new Stack<>();
+
+    int count = 1;
+    int lastItem = temp.pop();
+
+    while (!temp.isEmpty()) {
+
+      if (temp.top() == lastItem) count++;
+
+      else {
+        if (count > 1) result.push(count * lastItem);
+        count = 1;
+      }
+
+      lastItem = temp.pop();
+    }
+
+    if (count > 1) result.push(count * lastItem);
+
+    return result;
+  }
+
+  public static int sumOfCoupleBiggerThenAll(Stack<Integer> stack, Stack<Integer> stack2) {
+
+    int maxSum = 0;
+    int lastItem = stack2.pop();
+
+    // get max sum of couple in stack2
+    while (!stack2.isEmpty()) {
+      if (stack2.top() + lastItem > maxSum) maxSum = stack2.top() + lastItem;
+      lastItem = stack2.pop();
+    }
+
+    // get sum of couple closest to top of stack
+    lastItem = stack.top();
+    while (!stack.isEmpty()) {
+      if (stack.top() + lastItem > maxSum) return stack.top() + lastItem;
+      lastItem = stack.pop();
+    }
+
+    // if no couple sum is bigger then maxSum return 0
+    return 0;
+  }
 
 }
