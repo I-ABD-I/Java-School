@@ -7,9 +7,8 @@ import utils.StackUtils;
 @SuppressWarnings("unused")
 public class Main {
   public static void stackMain() {
-    Stack<Integer> stack = StackUtils.build(new Integer[]{7, 6, 14, 8, 12, 9, 7});
-    Stack<Integer> stack2 = StackUtils.build(new Integer[]{11, 9, 1, 4, 13, 4, 8, 2});
-    System.out.println(sumOfCoupleBiggerThenAll(stack, stack2));
+    Stack<Integer> stack = StackUtils.build(new Integer[]{1, 1, 1, 2, 2, 3});
+    System.out.println(isCrazy(stack));
   }
 
   public static boolean isEven(Stack<Integer> stack) {
@@ -20,13 +19,13 @@ public class Main {
     return true;
   }
 
-  public static int median(Stack<Integer> stack) {
+  public static double median(Stack<Integer> stack) {
     Stack<Integer> temp = StackUtils.copy(stack);
 
-    int median = 0;
+    double median = 0;
     while (!temp.isEmpty()) {
       median = StackUtils.min(temp);
-      if (!temp.isEmpty()) StackUtils.max(temp);
+      if (!temp.isEmpty()) median = (median + StackUtils.max(temp)) / 2;
     }
 
     return median;
@@ -40,8 +39,10 @@ public class Main {
 
     while (!temp.isEmpty()) {                           // n
       sum += temp.pop();                                // const
-      if (!temp.isEmpty()) sum += temp.top();           // const
-      if (sum > 10) count++;                            // const
+      if (!temp.isEmpty()) {
+        sum += temp.top();                              // const
+        if (sum > 10) count++; // if temp is empty sum isn't a duo anymore     // const
+      }
       sum = 0;                                          // const
     }
 
@@ -120,18 +121,14 @@ public class Main {
   // O(n)
   public static void removeLowHalf(Stack<Integer> stack) {
     Stack<Integer> temp = new Stack<>();                                    // const
-    double avg = 0;                                                         // const
-    int size = 0;                                                           // const
-    while (!stack.isEmpty()) {                                              // n
-      avg += stack.top();                                                   // const
-      temp.push(stack.pop());                                            // const
-      size++;                                                               // const
+    double median = median(stack);                                          // n
+
+    while (!stack.isEmpty()) {                                               // n
+      if (stack.top() > median) temp.push(stack.top());                      // const
+      stack.pop();                                                           // const
     }
-    avg /= size;                                                            // const
-    while (!temp.isEmpty()) {                                               // n
-      if (temp.top() > avg) stack.push(temp.top());                      // const
-      temp.pop();                                                           // const
-    }
+
+    while (!temp.isEmpty()) stack.push(temp.pop());
   }
 
   // O(n)
@@ -149,20 +146,20 @@ public class Main {
     Stack<Integer> temp = StackUtils.copy(stack);                             // n
 
     int count = 1;
-    int prevCount = Integer.MAX_VALUE;
+    int prevCount = 0;
     int prev = temp.pop();
 
     while (!temp.isEmpty()) {                                                  // n
       if (temp.top() == prev) count++;
       else {
-        if (count > prevCount) return false;
+        if (count < prevCount) return false;
         prevCount = count;
         count = 1;
       }
       prev = temp.pop();
     }
 
-    return count < prevCount;
+    return count > prevCount;
   }
 
   // O(n)
