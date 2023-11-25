@@ -114,18 +114,18 @@ public class Main {
 
   public static void moveBigToEnd(Queue<Integer> queue) {
     var temp = new Queue<Integer>();
-    var maxq = new Queue<Integer>();
+    var maxQueue = new Queue<Integer>();
 
     int max = QueueUtils.maxRemove(queue);
-    maxq.insert(max);
+    maxQueue.insert(max);
 
     while (!queue.isEmpty()) {
-      if (queue.head() == max) maxq.insert(queue.remove());
+      if (queue.head() == max) maxQueue.insert(queue.remove());
       else temp.insert(queue.remove());
     }
 
     while (!temp.isEmpty()) queue.insert(temp.remove());
-    while (!maxq.isEmpty()) queue.insert(maxq.remove());
+    while (!maxQueue.isEmpty()) queue.insert(maxQueue.remove());
   }
 
   public static void splitUsingFirst(Queue<Integer> queue) {
