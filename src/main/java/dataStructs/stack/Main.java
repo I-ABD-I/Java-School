@@ -7,7 +7,7 @@ import utils.StackUtils;
 @SuppressWarnings("unused")
 public class Main {
   public static void stackMain() {
-    Stack<Integer> stack = StackUtils.build(new Integer[]{1, 1, 1, 2, 2, 3});
+    Stack<Integer> stack = StackUtils.build(1, 1, 1, 2, 2, 3);
     System.out.println(isCrazy(stack));
   }
 

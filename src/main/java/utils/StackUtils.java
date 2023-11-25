@@ -7,12 +7,13 @@ public class StackUtils {
   /**
    * Builds a stack from an array.
    *
-   * @param arr the array to build the stack from
+   * @param items the array to build the stack from
    * @return the stack containing the elements from the array
    */
-  public static <T> Stack<T> build(T[] arr) {
+  @SafeVarargs
+  public static <T> Stack<T> build(T... items) {
     Stack<T> stack = new Stack<>();
-    for (var i : arr) {
+    for (var i : items) {
       stack.push(i);
     }
     return stack;
@@ -73,8 +74,13 @@ public class StackUtils {
     }
 
     // return stack into orig state without min
+    int count = 0;
     while (!temp.isEmpty()) {
-      if (!temp.top().equals(min)) stack.push(temp.top());
+      if (!temp.top().equals(min) || count != 0) stack.push(temp.top());
+      else {
+        count++;
+        temp.pop();
+      }
       temp.pop();
     }
     return min;
