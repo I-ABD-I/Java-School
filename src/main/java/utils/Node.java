@@ -5,7 +5,6 @@ public class Node<T> {
     private T value;
     private Node<T> next;
 
-    
     // Methods
     public Node(T value) {
         this.value = value;
@@ -42,12 +41,9 @@ public class Node<T> {
     }
 
     public String toString() {
-        if (this.next == null) return this.value + "-->Null";
+        if (this.next == null)
+            return this.value + "-->Null";
         return this.value + "-->" + this.next;
-
 
     }
 }
-
-
-

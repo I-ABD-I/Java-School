@@ -23,4 +23,22 @@ public class rMath {
         return xOvery(x - y, y) + 1;
     }
 
+    public static boolean isDivisibleByEleven(int num) {
+        if (num == 0) {
+            return true; // 0 is divisible by 11
+        }
+        if (num < 11) {
+            return false; // Numbers less than 11 are not divisible by 11
+        }
+
+        int lastDigit = num % 10;
+        int remainingDigits = num / 10;
+
+        // remove from orig num a number that is divisible by 11 and remove the 0 cuz it
+        // dosent matter
+        int newNum = remainingDigits - lastDigit;
+
+        return isDivisibleByEleven(newNum);
+    }
+
 }
