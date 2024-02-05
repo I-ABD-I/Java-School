@@ -6,20 +6,18 @@ import static utils.LinkedListUtils.length;
 import static utils.LinkedListUtils.removeAll;
 import static utils.LinkedListUtils.reverse;
 
+import OOP.Rational;
 import utils.Node;
 
 public class Main {
     public static void listMain() {
-        System.out.println(mulList(build(5, 7, 10, 6), build(1, 3, 2, 4)));
-        System.out.println(mulList2(build(5, 7, 10, 6), build(1, 3, 2, 4)));
-        System.out.println(mulList(build(1, 2, 3, 4), build(1, 2, 3, 4)));
-        System.out.println(mulList2(build(1, 2, 3, 4), build(1, 2, 3, 4)));
-        System.out.println(
-                mulList2(build(67, 31, 96, 94, 2, 91, 30, 27, 53, 93),
-                        build(15, 10, 38, 34, 33, 16, 13, 51, 88, 70)));
-        System.out.println(
-                mulList2(build(67, 31, 96, 94, 2, 91, 30, 27, 53, 93),
-                        build(15, 10, 38, 34, 33, 16, 13, 51, 88, 70)));
+        System.out.println(ObjMain.sumSameDenomenator(build(
+                new Rational(3, 4),
+                new Rational(1, 5),
+                new Rational(2, 4),
+                new Rational(1, 4),
+                new Rational(4, 3),
+                new Rational(2, 5))));
     }
 
     public static Node<Integer> removeDupes(Node<Integer> head) {
@@ -43,6 +41,27 @@ public class Main {
         }
 
         return ret.getNext();
+    }
+
+    public static Node<Integer> delFromList(Node<Integer> list, int toRemove) {
+        if (list.getValue() == toRemove) {
+            return list.getNext();
+        }
+
+        Node<Integer> p = list.getNext();
+        Node<Integer> prev = list;
+        int counter = 0;
+        while (p != null) {
+            if (p.getValue() == toRemove && counter == 0) {
+                prev.setNext(p.getNext());
+                counter++;
+                p.setNext(null);
+            }
+            p = p.getNext();
+            prev = prev.getNext();
+        }
+
+        return list;
     }
 
     public static Node<Integer> insertInSorted(Node<Integer> head, int value) {
