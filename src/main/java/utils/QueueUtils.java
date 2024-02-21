@@ -272,4 +272,5 @@ public class QueueUtils {
     public static <T extends Comparable<? super T>> Queue<T> sort(Queue<T> queue) {
         return sort(queue, Comparator.naturalOrder());
     }
+
 }
